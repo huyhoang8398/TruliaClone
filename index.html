@@ -10,23 +10,88 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
+
+    <script>
+        $('#carouselExample').on('slide.bs.carousel', function (e) {
+
+
+            var $e = $(e.relatedTarget);
+            var idx = $e.index();
+            var itemsPerSlide = 4;
+            var totalItems = $('.carousel-item').length;
+
+            if (idx >= totalItems - (itemsPerSlide - 1)) {
+                var it = itemsPerSlide - (totalItems - idx);
+                for (var i = 0; i < it; i++) {
+                    // append slides to end
+                    if (e.direction == "left") {
+                        $('.carousel-item').eq(i).appendTo('.carousel-inner');
+                    }
+                    else {
+                        $('.carousel-item').eq(0).appendTo('.carousel-inner');
+                    }
+                }
+            }
+        });
+
+
+        $('#carouselExample').carousel({
+            interval: 2000
+        });
+
+
+        $(document).ready(function () {
+            /* show lightbox when clicking a thumbnail */
+            $('a.thumb').click(function (event) {
+                event.preventDefault();
+                var content = $('.modal-body');
+                content.empty();
+                var title = $(this).attr("title");
+                $('.modal-title').html(title);
+                content.html($(this).html());
+                $(".modal-profile").modal({ show: true });
+            });
+
+        });
+
+    </script>
+
+
     <style>
         .nav.navbar-nav.navbar-right li a {
             color: white;
         }
 
-        .parallax {
-            /* The image used */
-            background-image: url("images/background2.jpg");
-
-            /* Set a specific height */
-            min-height: 500px;
-
-            /* Create the parallax scrolling effect */
+        .paral {
+            min-height: 600px;
             background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
             background-size: cover;
+            background-position: 50% 50%;
+        }
+
+        /* Paragraph for Parallax Section */
+        .paral p {
+            font-size: 24px;
+            color: #f5f5f5;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        /* Heading for Parallax Section */
+        .paral h1 {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 60px;
+            text-align: center;
+            padding-top: 60px;
+            line-height: 100px;
+        }
+
+        .paralsec {
+            background-image: url("images/background2.jpg");
+        }
+
+        .jumbotron {
+            margin-bottom: 0;
         }
 
         .topbar {
@@ -50,6 +115,79 @@
             background-color: #17a2b8;
             color: white;
         }
+
+
+        @media (min-width: 768px) {
+
+/* show 3 items */
+.carousel-inner .active,
+.carousel-inner .active + .carousel-item,
+.carousel-inner .active + .carousel-item + .carousel-item,
+.carousel-inner .active + .carousel-item + .carousel-item + .carousel-item  {
+    display: block;
+}
+
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+    transition: none;
+}
+
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+  position: relative;
+  transform: translate3d(0, 0, 0);
+}
+
+.carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: absolute;
+    top: 0;
+    right: -25%;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+}
+
+/* left or forward direction */
+.active.carousel-item-left + .carousel-item-next.carousel-item-left,
+.carousel-item-next.carousel-item-left + .carousel-item,
+.carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+.carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
+.carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+}
+
+/* farthest right hidden item must be abso position for animations */
+.carousel-inner .carousel-item-prev.carousel-item-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+}
+
+/* right or prev direction */
+.active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+.carousel-item-prev.carousel-item-right + .carousel-item,
+.carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+.carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
+.carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+    display: block;
+    visibility: visible;
+}
+
+}
+
+
+
+
     </style>
 </head>
 
@@ -60,43 +198,50 @@
         <a class="navbar-brand" href="#">
             <img src="images/logo.png" alt="logo" style="width:65px;">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-      
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Buy<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Rent<span class="sr-only">(current)</span></a>
-            </li>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Buy<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Rent<span class="sr-only">(current)</span></a>
+                </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                More
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Mortgage</a>
-                <a class="dropdown-item" href="#">Local Info</a>
-                <a class="dropdown-item" href="#">Additional Resources</a>
-              </div>
-            </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        More
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Mortgage</a>
+                        <a class="dropdown-item" href="#">Local Info</a>
+                        <a class="dropdown-item" href="#">Additional Resources</a>
+                    </div>
+                </li>
 
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
-      </nav>
+    </nav>
 
-<!-- END NAVBAR -->
+    <!-- END NAVBAR -->
 
-    <div class="parallax">
-        <div class="topbar">
-            <h2>Discover a place where you love to live</h2>
+    <div class="jumbotron paral paralsec">
+        <h1>Discover a place where you love to live</h1>
+        <p>For testing purpose only</p>
+        <div style="text-align: center;">
+            <form class="form-inline my-2 my-lg-0 ">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
     </div>
 
@@ -106,93 +251,401 @@
 
         <h2 class="topbar1">Buy</h2>
 
-        <div class="row">
-
-
-            <div class="col-sm-3">
-                <div class="card" style="width:400px">
-                    <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Ngo Hong Anh</h4>
-                        <p class="card-text">Some example text some example text. Some example text some example text.</p>
-                        <a href="#" class="btn btn-info">See house</a>
+        <!-- test -->
+        <div class="container-fluid">
+            <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="9000">
+                <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                    <div class="carousel-item col-md-3 active">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-
-
-            <div class="col-sm-3">
-                <div class="card" style="width:400px">
-                    <img class="card-img-bottom" src="images/i2.jpg" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Nguyen Hai Bang</h4>
-                        <p class="card-text">Some example text some example text. Some example text some example text.</p>
-                        <a href="#" class="btn btn-info">See studio</a>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-sm-3">
-                <div class="card" style="width:400px">
-                    <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Ngo Hong Anh</h4>
-                        <p class="card-text">Some example text some example text. Some example text some example text.</p>
-                        <a href="#" class="btn btn-info">See house</a>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-sm-3">
-                    <div class="card" style="width:400px">
-                        <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
-                        <div class="card-body">
-                            <h4 class="card-title">Ngo Hong Anh</h4>
-                            <p class="card-text">Some example text some example text. Some example text some example text.</p>
-                            <a href="#" class="btn btn-info">See house</a>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i2.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">oohohoho</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i2.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i2.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
+                <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                    <i class="fa fa-chevron-left fa-lg text-muted"></i>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+                    <i class="fa fa-chevron-right fa-lg text-muted"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
         </div>
+        <!-- test -->
 
 
 
+
+        <h2 class="topbar1">Rent</h2>
+
+        <!-- test -->
+        <div class="container-fluid">
+            <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="9000">
+                <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                    <div class="carousel-item col-md-3 active">
+
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">Ngo Hong Anh</h4>
+                                <p class="card-text">Some example text some example text. Some example text some
+                                    example text.</p>
+                                <a href="#" class="btn btn-info">See house</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item col-md-3">
+
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">Ngo Hong Anh</h4>
+                                <p class="card-text">Some example text some example text. Some example text some
+                                    example text.</p>
+                                <a href="#" class="btn btn-info">See house</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item col-md-3">
+
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">Ngo Hong Anh</h4>
+                                <p class="card-text">Some example text some example text. Some example text some
+                                    example text.</p>
+                                <a href="#" class="btn btn-info">See house</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item col-md-3">
+
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="images/i2.jpg" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">Ngo Hong Anh</h4>
+                                <p class="card-text">Some example text some example text. Some example text some
+                                    example text.</p>
+                                <a href="#" class="btn btn-info">See house</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item col-md-3">
+
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">oohohoho</h4>
+                                <p class="card-text">Some example text some example text. Some example text some
+                                    example text.</p>
+                                <a href="#" class="btn btn-info">See house</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item col-md-3">
+
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="images/i2.jpg" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">Ngo Hong Anh</h4>
+                                <p class="card-text">Some example text some example text. Some example text some
+                                    example text.</p>
+                                <a href="#" class="btn btn-info">See house</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item col-md-3">
+
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">Ngo Hong Anh</h4>
+                                <p class="card-text">Some example text some example text. Some example text some
+                                    example text.</p>
+                                <a href="#" class="btn btn-info">See house</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item col-md-3">
+
+                        <div class="card" style="width:400px">
+                            <img class="card-img-top" src="images/i2.jpg" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">Ngo Hong Anh</h4>
+                                <p class="card-text">Some example text some example text. Some example text some
+                                    example text.</p>
+                                <a href="#" class="btn btn-info">See house</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                    <i class="fa fa-chevron-left fa-lg text-muted"></i>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+                    <i class="fa fa-chevron-right fa-lg text-muted"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!-- test -->
+
+
+
+
+        <h2 class="topbar1">Mortage</h2>
+
+        <!-- test -->
+        <div class="container-fluid">
+            <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="9000">
+                <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                    <div class="carousel-item col-md-3 active">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i2.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">oohohoho</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i2.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-md-3">
+                        <div class="col-sm-3">
+                            <div class="card" style="width:400px">
+                                <img class="card-img-top" src="images/i2.jpg" alt="Card image" style="width:100%">
+                                <div class="card-body">
+                                    <h4 class="card-title">Ngo Hong Anh</h4>
+                                    <p class="card-text">Some example text some example text. Some example text some
+                                        example text.</p>
+                                    <a href="#" class="btn btn-info">See house</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                    <i class="fa fa-chevron-left fa-lg text-muted"></i>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+                    <i class="fa fa-chevron-right fa-lg text-muted"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!-- test -->
 
         <br>
 
-        <div class="card" style="width:400px">
-            <img class="card-img-top" src="images/i1.jpg" alt="Card image" style="width:100%">
-            <div class="card-body">
-                <h4 class="card-title">Ngo Hong Anh</h4>
-                <p class="card-text">Some example text some example text. Some example text some example text.</p>
-                <a href="#" class="btn btn-info">See house</a>
-            </div>
-        </div>
 
-        <p>Image at the bottom (card-img-bottom):</p>
-        <div class="card" style="width:400px">
-            <img class="card-img-bottom" src="images/i2.jpg" alt="Card image" style="width:100%">
-            <div class="card-body">
-                <h4 class="card-title">Nguyen Hai Bang</h4>
-                <p class="card-text">Some example text some example text. Some example text some example text.</p>
-                <a href="#" class="btn btn-info">See studio</a>
-            </div>
-
-        </div>
     </div>
     <br>
-    
-    
 
 
-    <footer class="">
-            <p>Copyright by USTH 2018</p>
-            <p>All right reserved</p>
-    <img src="images/logo.png" class="img-responsive img-square margin" style="display:inline" alt="usth" width="200"
-        height="100">
-          </footer>
+
+
+    <footer class="wn-footer">
+        <div class="container text-center">
+            <br>
+            <p>This is a web page for studying only by DuyL@i at <a href="https://www.usth.edu.vn/">USTH</a></p>
+            <p>
+                <a href="#">Back to top</a>
+            </p>
+
+            <img src="images/logo.png" class="img-responsive img-square margin" style="display:inline" alt="usth" width="200">
+            <br>
+
+            <br>
+    </footer>
 
 </body>
 
