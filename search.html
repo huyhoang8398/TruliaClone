@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search</title>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../node_modules/instantsearch.js/dist/instantsearch.min.css">
+    <link rel="stylesheet" type="text/css" href="search/style.css">
+</head>
+
+<body>
+    <!-- Main -->
+    <header>
+        <div id="search-input"></div>
+    </header>
+
+    <main>
+        <div id="left-column">
+            <div id="category" class="facet"></div>
+        </div>
+
+        <div id="right-column">
+            <div id="sort-by-wrapper"><span id="sort-by"></span></div>
+            <div id="stats"></div>
+            <div id="hits"></div>
+            <div id="pagination"></div>
+        </div>
+    </main>
+
+    <!-- Templates  -->
+
+    <script type="text/html" id="hit-template">
+        <div class="hit">
+          <div class="hit-image">
+            <img src="{{img_link.0}}">
+          </div>
+          <div class="hit-content">
+            <h5 class="hit-name">{{{_highlightResult.title.value}}}</h2>
+            <p>
+                <i class="fa fa-clock-o"></i> {{posted_date}} <br> 
+                <i class="fa fa-home"></i> {{{_highlightResult.address.value}}} <br>
+                <span class="badge badge-danger">{{price}}</span>
+            </p>
+          </div>
+        </div>
+      </script>
+
+    <script type="text/html" id="no-results-template">
+        <div id="no-results-message">
+            <p>We didn't find any results for the search <em>"{{query}}"</em>.</p>
+        </div>
+    </script>
+
+    <script src="../node_modules/instantsearch.js/dist/instantsearch.min.js"></script>
+    <script src="search/search.js"></script>
+</body>
+
+</html>
