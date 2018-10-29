@@ -27,10 +27,6 @@ search.addWidget(
             {
                 name: `${search.indexName}_price_asc`,
                 label: 'Lowest price',
-            },
-            {
-                name: `${search.indexName}_price_desc`,
-                label: 'Highest price',
             }
         ]
     })
@@ -50,7 +46,16 @@ search.addWidget(
         templates: {
             item: getTemplate('hit'),
             empty: getTemplate('no-results')
-        }
+        },
+        transformData: function(hit) {
+            if (hit.price > 1) {
+                res = Math.floor(hit.price) + " B";
+            } else {
+                res = Math.floor(hit.price * 1000) + " M";
+            }
+            hit.formatted_price = res;
+            return hit;
+        },
     })
 );
 
