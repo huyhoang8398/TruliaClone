@@ -1,0 +1,172 @@
+<!doctype <!DOCTYPE html>
+<html>
+
+<head>
+  <title>Form</title>
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+
+  <script>
+    function preview_images() {
+      $("#img-preview").empty();
+      var total_file = document.getElementById("images").files.length;
+      var template = $("#image-template").html();
+      for (var i = 0; i < total_file; i++) {
+        data = { img_src: URL.createObjectURL(event.target.files[i]) };
+        $('#img-preview').append(Mustache.render(template, data));
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center jumbotron">Post an ad</h1>
+
+    <form enctype="multipart/form-data" action="upload_data.php" method="POST">
+      <div class="form-group row">
+        <label for="title" class="col-md-2 col-form-label">Title</label>
+        <div class="col-md-10">
+          <textarea class="form-control" id="title" name="title" required></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="description" class="col-md-2 col-form-label">Description</label>
+        <div class="col-md-10">
+          <textarea class="form-control" id="description" rows="5" name="description" required></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <legend class="col-form-label col-md-2 pt-0">Post schedule</legend>
+        <div class="form-group col-md-5">
+          <label for="startDate">Start date</label>
+          <input type="date" class="form-control" id="startDate" name="startDate" required>
+        </div>
+        <div class="form-group col-md-5">
+          <label for="expirationDate">Expiration date</label>
+          <input type="date" class="form-control" id="expirationDate" name="expirationDate" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <legend class="col-form-label col-md-2">Basic info</legend>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="adType" class="col-form-label">Type of ad</label>
+              <select class="form-control" id="adType" name="adType">
+                <option selected>For sale</option>
+                <option>For rent</option>
+              </select>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="housingType" class="col-form-label">Type of housing</label>
+              <select class="form-control" id="housingType" name="housingType">
+                <option selected>Nhà riêng</option>
+                <option>Căn hộ chung cư</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="city" class="col-form-label">City</label>
+              <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="district" class="col-form-label">District</label>
+              <input type="text" class="form-control" id="district" name="district" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="price" class="col-form-label">Price</label>
+              <div class="row">
+                <div class="col-md-3">
+                  <input type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <div class="col-md-3">
+                  <select class="form-control" id="priceUnit" name="priceUnit">
+                    <option value="" selected disabled>unit</option>
+                    <option>billion</option>
+                    <option>million</option>
+                  </select>
+                </div>
+                <div class="col-md-6 form-group row">
+                  <label for="priceFor" class="col-form-label col-md-4">for</label>
+                  <div class="col-md-8">
+                    <select class="form-control" id="priceFor" name="priceFor">
+                      <option>everything</option>
+                      <option>1 m²</option>
+                      <option>1 month</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="surfaceArea" class="col-form-label">Surface area</label>
+              <input type="number" class="form-control" id="surfaceArea" name="surfaceArea" required>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <legend class="col-form-label col-md-2">Upload images</legend>
+        <div class="col-md-10">
+          <input type="hidden" name="MAX_FILE_SIZE" value="5000000" />
+          <input type="file" class="form-control" id="images" name="images[]" onchange="preview_images();" multiple
+            required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10 row" id="img-preview"></div>
+      </div>
+
+      <div class="row">
+        <legend class="col-form-label col-md-2">Contacts</legend>
+        <div class="col-md-10">
+          <div class="form-group">
+            <label for="contactName" class="col-form-label">Name</label>
+            <input type="text" class="form-control" id="contactName" name="contactName" required>
+          </div>
+          <div class="form-group">
+            <label for="contactEmail" class="col-form-label">Email</label>
+            <input type="email" class="form-control" id="contactEmail" name="contactEmail" required>
+          </div>
+          <div class="form-group">
+            <label for="contactPhone" class="col-form-label">Phone</label>
+            <input type="text" class="form-control" id="contactPhone" name="contactPhone" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script id="image-template" type="text/template">
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img src={{img_src}} style="width:100%">
+            </div>
+        </div>
+    </script>
+
+</body>
+
+</html>
