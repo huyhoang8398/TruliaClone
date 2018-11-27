@@ -72,7 +72,7 @@ header img {
   outline: 0;
 }
 #search-input input:focus {
-  border-color: #ed5565;
+  border-color: #00bcd4;
 }
 #search-input input::-webkit-input-placeholder, #search-input input:-moz-placeholder, #search-input input:-moz-placeholder, #search-input input:-ms-input-placeholder {
   font-weight: 100;
@@ -131,8 +131,8 @@ header img {
 
 .hit-content em {
   font-style: normal;
-  color: #ed5565;
-  border-bottom: solid 1px rgba(244, 107, 91, 0.5);
+  color: #00bcd4;
+  border-bottom: solid 1px #008ba3;
 }
 
 .hit-content p {
@@ -190,8 +190,8 @@ header img {
 }
 #pagination li.ais-pagination--item__active a {
   color: white;
-  border-color: #ed5565;
-  background: #ed5565;
+  border-color: #00bcd4;
+  background: #00bcd4;
 }
 #pagination li.ais-pagination--item__active a:hover {
   cursor: default;
@@ -332,13 +332,13 @@ header img {
 .ais-menu--item__active .ais-menu--link,
 .ais-hierarchical-menu--list .facet-item.active:hover,
 .ais-hierarchical-menu--list .facet-item.active {
-  color: #ed5565;
+  color: #00bcd4;
 }
 .ais-refinement-list--item__active .ais-refinement-list--label:hover,
 .ais-menu--item__active .ais-menu--link:hover,
 .ais-hierarchical-menu--list .facet-item.active:hover {
   text-decoration: line-through;
-  color: #ed5565;
+  color: #00bcd4;
 }
 .ais-refinement-list--count,
 .ais-hierarchical-menu--count,
@@ -413,44 +413,17 @@ a.clear-all:hover {
 
 /* SLIDER */
 .ais-range-slider .rheostat-progress {
-  background-color: #ed5565;
+  background-color: #00bcd4;
 }
 
 .ais-range-slider--handle {
-  border-color: #ed5565;
+  border-color: #00bcd4;
 }
 
 .ais-body.ais-range-slider--body {
   width: 90%;
   margin: 0 auto;
 }
-
-/* Star Rating */
-.ais-star-rating--star,
-.ais-star-rating--star__empty {
-  display: inline-block;
-  width: 1em;
-  height: 1em
-}
-
-.ais-star-rating--item__active {
-
-}
-
-.ais-star-rating--star:before {
-  content: '\2605';
-  color: #FBAE00
-}
-
-.ais-star-rating--star__empty:before {
-  content: '\2606';
-  color: #FBAE00
-}
-
-.ais-star-rating--link__disabled .ais-star-rating--star:before,.ais-star-rating--link__disabled .ais-star-rating--star__empty:before {
-  color: #C9C9C9
-}
-
 
 /* Price Ranges */
 .ais-price-ranges--form {
@@ -527,9 +500,9 @@ footer {
 }
 footer a {
   text-decoration: none;
-  color: #ed5565;
+  color: #00bcd4;
 }
 footer a:hover {
   text-decoration: underline;
-  color: #ed5565;
+  color: #00bcd4;
 }
